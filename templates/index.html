@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f8fb">
+  <title>Weather Pattern Analysis | Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+      <a class="brand" href="#overview" aria-label="Atmos home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32"><path d="M8 19.5a6.5 6.5 0 0 1 12.4-2.8A4.7 4.7 0 1 1 22 26H9.5a3.5 3.5 0 0 1-1.5-6.5Z"/><path d="M16 5v4m-8-1 2.5 2.5M24 8l-2.5 2.5"/></svg>
+        </span>
+        <span class="brand-copy"><strong>Atmos</strong><small>WEATHER INSIGHTS</small></span>
+      </a>
+      <div class="nav-label">WORKSPACE</div>
+      <nav class="nav-links">
+        <a class="nav-link active" href="#overview"><span class="nav-icon">▦</span>Overview</a>
+        <a class="nav-link" href="{{ '#analysis-results' if analysis else '#metrics' }}"><span class="nav-icon">⌁</span>Statistics</a>
+        <a class="nav-link" href="{{ '#probability-analysis' if analysis else '#upload' }}"><span class="nav-icon">◉</span>Probability</a>
+        <a class="nav-link" href="#charts"><span class="nav-icon">▥</span>Visualizations</a>
+        <a class="nav-link" href="#upload"><span class="nav-icon">⇧</span>Data source</a>
+      </nav>
+      <div class="sidebar-note">
+        <span class="note-icon">✦</span>
+        <strong>Your weather, in perspective.</strong>
+        <p>Upload a dataset to begin exploring meaningful patterns.</p>
+        <a href="#upload">Add a dataset <span>→</span></a>
+      </div>
+      <div class="sidebar-footer"><span class="status-dot"></span>Stage 6 · Integrated dashboard</div>
+    </aside>
+
+    <main class="main-content" id="overview">
+      <header class="topbar">
+        <button class="menu-toggle" id="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+        <div class="breadcrumb"><span>Workspace</span><b>/</b><strong>Overview</strong></div>
+        <div class="topbar-right"><span class="demo-tag"><i></i> LOCAL DASHBOARD</span><span class="avatar" aria-label="Student project">WP</span></div>
+      </header>
+
+      <div class="content-wrap">
+        <section class="welcome-row">
+          <div>
+            <div class="eyebrow"><span class="eyebrow-line"></span> WEATHER PATTERN ANALYSIS</div>
+            <h1>Good day, <span>explorer.</span></h1>
+            <p class="subtitle">A clearer view of the patterns in our atmosphere.</p>
+          </div>
+          <div class="date-chip"><span class="calendar-icon">▦</span><span><small>ACTIVE DATASET</small><strong>{{ summary.filename if summary else 'Ready for upload' }}</strong></span></div>
+        </section>
+
+        <section class="dataset-banner" aria-live="polite">
+          <div class="banner-symbol"><span>↗</span></div>
+          <div class="banner-copy"><strong>{{ 'Dataset loaded and ready to explore' if summary else 'Your dashboard is ready for its first dataset' }}</strong><p>{{ 'All results below are calculated from the active uploaded file.' if summary else 'Upload a weather dataset to populate the dashboard, analysis and charts.' }}</p></div>
+          {% if summary %}<span class="dataset-kind-badge {{ summary.dataset_kind }}">{{ 'SAMPLE / DEMO DATA' if summary.dataset_kind == 'sample' else 'HISTORICAL DATASET' }}</span>{% endif %}
+          <a class="banner-link" href="#upload">Add your data <span>→</span></a>
+        </section>
+
+        <section class="upload-section" id="upload">
+          <div class="section-heading upload-heading"><div><div class="eyebrow">SECTION 1 · DATASET</div><h2>{{ 'Replace your dataset' if summary else 'Bring your weather data' }}</h2><p class="section-description">Upload a CSV containing Date, Temperature, Rainfall and Humidity. Maximum file size: 5 MB.</p></div><span class="file-format">CSV · MAX 5 MB</span></div>
+          <form class="panel upload-panel" id="upload-form" action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data">
+            <div class="upload-icon"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 21V6m0 0-6 6m6-6 6 6"/><path d="M7 19v6a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-6"/></svg></div>
+            <div class="upload-copy"><strong id="selected-file">{{ summary.filename if summary else 'Choose a CSV file to get started' }}</strong><p>Required columns: Date, Temperature, Rainfall, Humidity</p></div>
+            <input id="file-input" name="weather_file" type="file" accept=".csv,text/csv" required>
+            <label class="dataset-kind-field"><span>Data type</span><select name="dataset_kind" aria-label="Dataset type"><option value="historical" {% if summary and summary.dataset_kind == 'historical' %}selected{% endif %}>Historical data</option><option value="sample" {% if summary and summary.dataset_kind == 'sample' %}selected{% endif %}>Sample / demo data</option></select></label>
+            <button class="button-primary" id="upload-button" type="submit">{{ 'Replace dataset' if summary else 'Upload dataset' }} <span>↑</span></button>
+            <span class="upload-progress" id="upload-progress" hidden><i></i> Validating, analyzing and generating charts…</span>
+          </form>
+          {% if summary %}<form class="reset-form" action="{{ url_for('reset_dataset') }}" method="post"><button class="button-secondary" type="submit">Reset dataset</button></form>{% endif %}
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}<p class="upload-status {{ category }}" role="status">{{ message }}</p>{% endfor %}
+            {% endif %}
+          {% endwith %}
+        </section>
+
+        {% if summary %}
+        <section class="dataset-preview-section" id="dataset-preview">
+          <div class="section-heading"><div><div class="eyebrow">ACTIVE DATASET PREVIEW</div><h2>Upload summary</h2></div><span class="record-count">{{ summary.record_count }} records</span></div>
+          <div class="summary-grid">
+            <article class="panel summary-card"><small>TOTAL RECORDS</small><strong>{{ summary.record_count }}</strong></article>
+            <article class="panel summary-card"><small>START DATE</small><strong>{{ summary.start_date }}</strong></article>
+            <article class="panel summary-card"><small>END DATE</small><strong>{{ summary.end_date }}</strong></article>
+          </div>
+          <div class="panel table-panel">
+            <div class="table-heading"><div><h3>Dataset preview</h3><p>Showing up to the first 10 rows · {{ 'Sample/demo data' if summary.dataset_kind == 'sample' else 'Historical data' }}</p></div><span>{{ summary.filename }}</span></div>
+            <div class="table-scroll"><table><thead><tr><th>Date</th><th>Temperature</th><th>Rainfall</th><th>Humidity</th></tr></thead><tbody>
+              {% for row in preview %}<tr><td>{{ row.Date }}</td><td>{{ row.Temperature }}</td><td>{{ row.Rainfall }}</td><td>{{ row.Humidity }}</td></tr>{% endfor %}
+            </tbody></table></div>
+          </div>
+        </section>
+        {% endif %}
+
+        <section class="metrics-grid" id="metrics" aria-label="Weather metrics">
+          <article class="metric-card">
+            <div class="metric-top"><span class="metric-label">TEMPERATURE</span><span class="metric-icon temp-icon">☼</span></div>
+            <div class="metric-value {{ '' if analysis and analysis.temperature.mean is not none else 'placeholder-value' }}">{{ '%.2f'|format(analysis.temperature.mean) if analysis and analysis.temperature.mean is not none else '—' }}<span class="metric-unit">°C</span></div>
+            <div class="metric-bottom"><span class="waiting-pill"><i></i> {{ (analysis.temperature.count ~ ' observations') if analysis and analysis.temperature.count else ('No valid observations' if analysis else 'Waiting for dataset') }}</span><span class="metric-foot">Mean temperature</span></div>
+            <div class="metric-accent temp-accent"></div>
+          </article>
+          <article class="metric-card">
+            <div class="metric-top"><span class="metric-label">RAINFALL</span><span class="metric-icon rain-icon">♧</span></div>
+            <div class="metric-value {{ '' if analysis and analysis.rainfall.total is not none else 'placeholder-value' }}">{{ '%.2f'|format(analysis.rainfall.total) if analysis and analysis.rainfall.total is not none else '—' }}<span class="metric-unit">mm</span></div>
+            <div class="metric-bottom"><span class="waiting-pill"><i></i> {{ (analysis.rainfall.count ~ ' observations') if analysis and analysis.rainfall.count else ('No valid observations' if analysis else 'Waiting for dataset') }}</span><span class="metric-foot">Total rainfall</span></div>
+            <div class="metric-accent rain-accent"></div>
+          </article>
+          <article class="metric-card">
+            <div class="metric-top"><span class="metric-label">HUMIDITY</span><span class="metric-icon humidity-icon">◉</span></div>
+            <div class="metric-value {{ '' if analysis and analysis.humidity.mean is not none else 'placeholder-value' }}">{{ '%.2f'|format(analysis.humidity.mean) if analysis and analysis.humidity.mean is not none else '—' }}<span class="metric-unit">%</span></div>
+            <div class="metric-bottom"><span class="waiting-pill"><i></i> {{ (analysis.humidity.count ~ ' observations') if analysis and analysis.humidity.count else ('No valid observations' if analysis else 'Waiting for dataset') }}</span><span class="metric-foot">Mean humidity</span></div>
+            <div class="metric-accent humidity-accent"></div>
+          </article>
+          <article class="metric-card probability-card">
+            <div class="metric-top"><span class="metric-label">RAIN PROBABILITY</span><span class="metric-icon probability-icon">◌</span></div>
+            <div class="metric-value {{ '' if analysis and analysis.probability.rain_probability is not none else 'placeholder-value' }}">{{ '%.2f'|format(analysis.probability.rain_probability) if analysis and analysis.probability.rain_probability is not none else '—' }}<span class="metric-unit">%</span></div>
+            <div class="metric-bottom"><span class="waiting-pill"><i></i> {{ 'Empirical probability' if analysis and analysis.probability.rain_probability is not none else ('No valid rainfall data' if analysis else 'Waiting for dataset') }}</span><span class="metric-foot">Empirical chance of rain</span></div>
+            <div class="metric-accent probability-accent"></div>
+          </article>
+        </section>
+
+        {% if analysis %}
+        <section class="analysis-section" id="analysis-results">
+          <div class="section-heading"><div><div class="eyebrow">SECTION 2 · STATISTICS</div><h2>Statistical summary</h2></div><span class="population-chip">Population variance · ddof = 0</span></div>
+          <div class="analysis-grid">
+            <article class="panel analysis-panel"><div class="analysis-panel-heading"><h3>Temperature</h3><span>{{ analysis.temperature.count }} valid observations · °C</span></div><div class="table-scroll"><table class="stats-table"><thead><tr><th>Measure</th><th>Result</th></tr></thead><tbody>
+              <tr><td>Mean</td><td>{{ '%.2f °C'|format(analysis.temperature.mean) if analysis.temperature.mean is not none else '—' }}</td></tr><tr><td>Median</td><td>{{ '%.2f °C'|format(analysis.temperature.median) if analysis.temperature.median is not none else '—' }}</td></tr><tr><td>Minimum</td><td>{{ '%.2f °C'|format(analysis.temperature.minimum) if analysis.temperature.minimum is not none else '—' }}</td></tr><tr><td>Maximum</td><td>{{ '%.2f °C'|format(analysis.temperature.maximum) if analysis.temperature.maximum is not none else '—' }}</td></tr><tr><td>Range</td><td>{{ '%.2f °C'|format(analysis.temperature.range) if analysis.temperature.range is not none else '—' }}</td></tr><tr><td>Population variance</td><td>{{ '%.2f °C²'|format(analysis.temperature.variance) if analysis.temperature.variance is not none else '—' }}</td></tr><tr><td>Population standard deviation</td><td>{{ '%.2f °C'|format(analysis.temperature.standard_deviation) if analysis.temperature.standard_deviation is not none else '—' }}</td></tr>
+            </tbody></table></div></article>
+            <article class="panel analysis-panel"><div class="analysis-panel-heading"><h3>Rainfall</h3><span>{{ analysis.rainfall.count }} valid observations · mm</span></div><div class="table-scroll"><table class="stats-table"><thead><tr><th>Measure</th><th>Result</th></tr></thead><tbody>
+              <tr><td>Mean rainfall</td><td>{{ '%.2f mm'|format(analysis.rainfall.mean) if analysis.rainfall.mean is not none else '—' }}</td></tr><tr><td>Median rainfall</td><td>{{ '%.2f mm'|format(analysis.rainfall.median) if analysis.rainfall.median is not none else '—' }}</td></tr><tr><td>Maximum rainfall</td><td>{{ '%.2f mm'|format(analysis.rainfall.maximum) if analysis.rainfall.maximum is not none else '—' }}</td></tr><tr><td>Total rainfall</td><td>{{ '%.2f mm'|format(analysis.rainfall.total) if analysis.rainfall.total is not none else '—' }}</td></tr>
+            </tbody></table></div><div class="analysis-panel-heading humidity-heading"><h3>Humidity</h3><span>{{ analysis.humidity.count }} valid observations · %</span></div><div class="table-scroll"><table class="stats-table"><thead><tr><th>Measure</th><th>Result</th></tr></thead><tbody>
+              <tr><td>Mean humidity</td><td>{{ '%.2f%%'|format(analysis.humidity.mean) if analysis.humidity.mean is not none else '—' }}</td></tr><tr><td>Median humidity</td><td>{{ '%.2f%%'|format(analysis.humidity.median) if analysis.humidity.median is not none else '—' }}</td></tr><tr><td>Minimum humidity</td><td>{{ '%.2f%%'|format(analysis.humidity.minimum) if analysis.humidity.minimum is not none else '—' }}</td></tr><tr><td>Maximum humidity</td><td>{{ '%.2f%%'|format(analysis.humidity.maximum) if analysis.humidity.maximum is not none else '—' }}</td></tr>
+            </tbody></table></div></article>
+          </div>
+          <div class="panel table-panel monthly-panel"><div class="table-heading"><div><h3>Monthly summaries</h3><p>Averages and totals grouped by calendar month</p></div><span>Values use valid observations for each measure</span></div><div class="table-scroll"><table><thead><tr><th>Month</th><th>Avg. temperature</th><th>Total rainfall</th><th>Avg. humidity</th></tr></thead><tbody>
+            {% for row in analysis.monthly %}<tr><td>{{ row.month }}</td><td>{{ '%.2f °C'|format(row.temperature_mean) if row.temperature_mean is not none else '—' }} <small>(n={{ row.temperature_count }})</small></td><td>{{ '%.2f mm'|format(row.rainfall_total) if row.rainfall_total is not none else '—' }} <small>(n={{ row.rainfall_count }})</small></td><td>{{ '%.2f%%'|format(row.humidity_mean) if row.humidity_mean is not none else '—' }} <small>(n={{ row.humidity_count }})</small></td></tr>{% endfor %}
+          </tbody></table></div></div>
+          <p class="analysis-note">Overall calculations include each measure’s finite numeric values; missing and non-finite observations are excluded. The valid-observation counts are shown above. Monthly summaries include rows with valid dates and calculate each measure from its own valid values within that month. Population variance and standard deviation divide by N.</p>
+        </section>
+        {% endif %}
+
+        {% if analysis %}
+        <section class="probability-section" id="probability-analysis">
+          <div class="section-heading"><div><div class="eyebrow">SECTION 3 · PROBABILITY</div><h2>{{ 'Sample data probabilities' if summary and summary.dataset_kind == 'sample' else 'Rain probability' }}</h2></div><span class="population-chip">Empirical · not a forecast</span></div>
+          {% if analysis.probability.valid_count %}
+          <div class="probability-layout">
+            <article class="panel probability-summary">
+              <div class="probability-summary-top"><span class="probability-mark">◉</span><div><small>VALID RAINFALL OBSERVATIONS</small><strong>{{ analysis.probability.valid_count }}</strong></div></div>
+              <div class="probability-counts"><div><span class="rain-dot"></span><span>Rainy days</span><strong>{{ analysis.probability.rainy_days }}</strong></div><div><span class="dry-dot"></span><span>Non-rainy days</span><strong>{{ analysis.probability.non_rainy_days }}</strong></div></div>
+              <div class="probability-values"><div><small>P(Rain)</small><strong>{{ '%.2f%%'|format(analysis.probability.rain_probability) }}</strong></div><div><small>P(No Rain)</small><strong>{{ '%.2f%%'|format(analysis.probability.no_rain_probability) }}</strong></div></div>
+            </article>
+            <article class="panel probability-chart-panel">
+              <div class="panel-heading"><div><h3>Rainy vs non-rainy days</h3><p>Share of valid rainfall observations</p></div><span class="chart-menu" aria-hidden="true">•••</span></div>
+              <div class="probability-chart" role="img" aria-label="Rainy days {{ '%.2f'|format(analysis.probability.rain_probability) }} percent; non-rainy days {{ '%.2f'|format(analysis.probability.no_rain_probability) }} percent">
+                <div class="probability-bar-item"><div class="probability-bar-rail"><div class="probability-bar rain-bar" style="height: {{ analysis.probability.rain_probability }}%"></div></div><strong>{{ '%.2f%%'|format(analysis.probability.rain_probability) }}</strong><span><i class="rain-dot"></i> Rainy</span></div>
+                <div class="probability-bar-item"><div class="probability-bar-rail"><div class="probability-bar dry-bar" style="height: {{ analysis.probability.no_rain_probability }}%"></div></div><strong>{{ '%.2f%%'|format(analysis.probability.no_rain_probability) }}</strong><span><i class="dry-dot"></i> No rain</span></div>
+              </div>
+            </article>
+          </div>
+          <div class="probability-tables">
+            <article class="panel table-panel"><div class="table-heading"><div><h3>Monthly rainy-day probabilities</h3><p>Rainy observations divided by valid rainfall observations in that month</p></div></div><div class="table-scroll"><table><thead><tr><th>Month</th><th>Valid rainfall</th><th>Rainy days</th><th>Non-rainy days</th><th>P(Rain)</th><th>P(No Rain)</th></tr></thead><tbody>
+              {% for row in analysis.probability.monthly %}<tr><td>{{ row.Month }}</td><td>{{ row.valid_count }}</td><td>{{ row.rainy_days }}</td><td>{{ row.non_rainy_days }}</td><td>{{ '%.2f%%'|format(row.rain_probability) }}</td><td>{{ '%.2f%%'|format(row.no_rain_probability) }}</td></tr>{% endfor %}
+            </tbody></table></div></article>
+            {% if analysis.probability.yearly %}<article class="panel table-panel"><div class="table-heading"><div><h3>Yearly rainy-day probabilities</h3><p>Displayed when the dataset includes more than one year</p></div></div><div class="table-scroll"><table><thead><tr><th>Year</th><th>Valid rainfall</th><th>Rainy days</th><th>Non-rainy days</th><th>P(Rain)</th><th>P(No Rain)</th></tr></thead><tbody>
+              {% for row in analysis.probability.yearly %}<tr><td>{{ row.Year }}</td><td>{{ row.valid_count }}</td><td>{{ row.rainy_days }}</td><td>{{ row.non_rainy_days }}</td><td>{{ '%.2f%%'|format(row.rain_probability) }}</td><td>{{ '%.2f%%'|format(row.no_rain_probability) }}</td></tr>{% endfor %}
+            </tbody></table></div></article>{% endif %}
+          </div>
+          <p class="analysis-note">These percentages are {{ 'sample-data' if summary and summary.dataset_kind == 'sample' else 'historical empirical' }} probabilities calculated from this dataset only; they describe observed frequencies and are not guaranteed forecasts. Blank rainfall cells are excluded from the valid-observation denominator.</p>
+          {% else %}<div class="panel no-rainfall-data"><strong>No valid rainfall observations</strong><p>Rain probabilities cannot be calculated until at least one non-missing rainfall value is available. Blank rainfall cells are excluded.</p></div>{% endif %}
+        </section>
+        {% endif %}
+
+        <section class="charts-section" id="charts">
+          <div class="section-heading"><div><div class="eyebrow">SECTION 4 · VISUALIZATION</div><h2>Patterns at a glance</h2><p class="section-description">Charts are generated from the active dataset. Uploading a replacement refreshes every chart.</p></div><span class="period-chip">6 data visualizations</span></div>
+          {% if charts %}
+          <div class="generated-chart-grid">
+            <article class="panel generated-chart-card"><h3>Temperature over time</h3><p>Daily observations · °C</p><img src="{{ url_for('generated_graph', filename=charts.temperature_over_time) }}" alt="Line chart of temperature over time in degrees Celsius"></article>
+            <article class="panel generated-chart-card"><h3>Rainfall over time</h3><p>Daily precipitation · mm</p><img src="{{ url_for('generated_graph', filename=charts.rainfall_over_time) }}" alt="Bar chart of rainfall over time in millimetres"></article>
+            <article class="panel generated-chart-card"><h3>Humidity over time</h3><p>Daily relative humidity · %</p><img src="{{ url_for('generated_graph', filename=charts.humidity_over_time) }}" alt="Line chart of humidity over time in percent"></article>
+            <article class="panel generated-chart-card"><h3>Rainy versus non-rainy days</h3><p>Counts from valid rainfall observations</p><img src="{{ url_for('generated_graph', filename=charts.rainy_days) }}" alt="Comparison chart of rainy and non-rainy days"></article>
+            <article class="panel generated-chart-card"><h3>Monthly average temperature</h3><p>Calendar month average · °C</p><img src="{{ url_for('generated_graph', filename=charts.monthly_temperature) }}" alt="Chart of monthly average temperature in degrees Celsius"></article>
+            <article class="panel generated-chart-card"><h3>Monthly total rainfall</h3><p>Calendar month total · mm</p><img src="{{ url_for('generated_graph', filename=charts.monthly_rainfall) }}" alt="Chart of monthly total rainfall in millimetres"></article>
+          </div>
+          {% else %}
+          <div class="panel charts-waiting"><span class="chart-placeholder-icon">⌁</span><strong>Charts will appear here after a dataset is uploaded</strong><small>Temperature, rainfall, humidity, rainy-day comparison and monthly summaries</small></div>
+          {% endif %}
+        </section>
+
+        <footer class="page-footer"><span>ATMOS <b>·</b> WEATHER PATTERN ANALYSIS</span><span>Academic project dashboard <b>·</b> Stage 6</span></footer>
+      </div>
+    </main>
+  </div>
+</body>
+</html>

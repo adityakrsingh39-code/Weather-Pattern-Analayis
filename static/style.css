@@ -1,0 +1,221 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap');
+
+:root{--ink:#172c40;--muted:#8393a3;--line:#e8eef2;--blue:#3988c7;--teal:#45b6aa;--navy:#122b40;--bg:#f5f8fa;--white:#fff;--shadow:0 5px 22px rgba(34,68,94,.045)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:24px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif;font-size:14px;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+.app-shell{min-height:100vh}
+.sidebar{width:238px;position:fixed;inset:0 auto 0 0;background:var(--navy);color:#dce9f1;padding:27px 18px 18px;display:flex;flex-direction:column;z-index:10}
+.brand{display:flex;align-items:center;gap:11px;padding:0 8px 35px}
+.brand-mark{width:40px;height:40px;border-radius:13px;background:#193b54;display:grid;place-items:center;color:#66c8c0}
+.brand-mark svg{width:27px;fill:none;stroke:currentColor;stroke-width:1.65;stroke-linecap:round;stroke-linejoin:round}
+.brand-copy{display:grid;gap:2px}.brand-copy strong{font:800 20px 'Manrope',sans-serif;letter-spacing:-.8px;color:#fff}.brand-copy small{font-size:8px;letter-spacing:1.3px;color:#8fa9bb;font-weight:700}
+.nav-label{padding:0 12px 12px;font-size:9px;letter-spacing:1.5px;color:#718da1;font-weight:700}
+.nav-links{display:grid;gap:5px}.nav-link{display:flex;align-items:center;gap:13px;padding:11px 12px;border-radius:8px;color:#a9becd;font-size:12px;font-weight:500;transition:background .18s,color .18s}.nav-link:hover,.nav-link.active{background:#1c4059;color:#fff}.nav-link.active{box-shadow:inset 2px 0 #55c6ba}.nav-icon{width:16px;text-align:center;font-size:17px;color:#80a8bc}
+.sidebar-note{margin-top:auto;border:1px solid #29485e;background:linear-gradient(145deg,#183a53,#163349);border-radius:12px;padding:15px 13px}.note-icon{color:#6accc2;font-size:15px}.sidebar-note strong{display:block;margin:10px 0 6px;color:#e9f4f8;font-size:12px}.sidebar-note p{margin:0;color:#91aabb;font-size:10px;line-height:1.6}.sidebar-note a{display:flex;justify-content:space-between;margin-top:14px;color:#71d1c7;font-weight:600;font-size:10px}.sidebar-footer{display:flex;align-items:center;gap:8px;color:#7893a5;font-size:9px;padding:17px 4px 2px}.status-dot,.demo-tag i{width:6px;height:6px;border-radius:50%;background:#61c8ae;display:inline-block}
+.main-content{margin-left:238px;min-height:100vh}.topbar{height:64px;border-bottom:1px solid #eaf0f3;background:rgba(255,255,255,.85);display:flex;align-items:center;justify-content:space-between;padding:0 42px}.breadcrumb{display:flex;gap:10px;align-items:center;color:#98a7b3;font-size:11px}.breadcrumb b{font-weight:400;color:#cad3da}.breadcrumb strong{color:#3d5366;font-weight:600}.topbar-right{display:flex;align-items:center;gap:17px}.demo-tag{font-size:9px;letter-spacing:.8px;font-weight:700;color:#648092;display:flex;align-items:center;gap:7px}.demo-tag i{width:5px;height:5px}.avatar{display:grid;place-items:center;width:29px;height:29px;border-radius:50%;background:#e4f3f0;color:#308c83;font-size:9px;font-weight:700}.menu-toggle{display:none;border:0;background:transparent;color:var(--ink);font-size:19px;cursor:pointer}
+.content-wrap{max-width:1250px;margin:0 auto;padding:38px 42px 25px}.welcome-row{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:25px}.eyebrow{font-size:9px;letter-spacing:1.6px;color:#7d929f;font-weight:700;display:flex;align-items:center;gap:8px}.eyebrow-line{width:14px;height:2px;background:#57bfb1;border-radius:4px}h1,h2,h3,p{margin-top:0}h1{font:700 28px 'Manrope',sans-serif;letter-spacing:-1.2px;margin:11px 0 5px;color:#19344a}h1 span{color:#478eaa}.subtitle{color:#8395a2;font-size:12px;margin:0}.date-chip{display:flex;gap:11px;align-items:center;background:#fff;border:1px solid var(--line);border-radius:9px;padding:9px 13px;box-shadow:var(--shadow)}.calendar-icon{width:30px;height:30px;border-radius:8px;background:#edf7f6;display:grid;place-items:center;color:#4eaaa1;font-size:16px}.date-chip span:last-child{display:grid;gap:3px}.date-chip small{font-size:8px;letter-spacing:.9px;color:#9aabb6;font-weight:700}.date-chip strong{font-size:10px;color:#486375}
+.dataset-banner{display:flex;align-items:center;gap:14px;padding:15px 18px;background:#edf7f7;border:1px solid #dcefee;border-radius:10px;margin-bottom:17px}.banner-symbol{width:34px;height:34px;border-radius:9px;background:#d9efeb;display:grid;place-items:center;color:#43a99e;font-size:20px}.banner-copy{flex:1}.banner-copy strong{font-size:11px;color:#315967}.banner-copy p{font-size:10px;color:#7d9a9e;margin:4px 0 0}.banner-link{white-space:nowrap;font-size:10px;font-weight:700;color:#338f89}.banner-link span{padding-left:6px;font-size:14px}
+.metrics-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}.metric-card,.panel{background:#fff;border:1px solid #eaf0f3;border-radius:10px;box-shadow:var(--shadow)}.metric-card{padding:15px 15px 13px;min-height:130px;position:relative;overflow:hidden}.metric-top{display:flex;justify-content:space-between;align-items:center}.metric-label{font-size:8px;letter-spacing:1px;font-weight:700;color:#91a1ad}.metric-icon{height:27px;width:27px;border-radius:8px;display:grid;place-items:center;font-size:17px}.temp-icon{background:#fff3e9;color:#eda565}.rain-icon{background:#eaf5fc;color:#65a9d1}.humidity-icon{background:#eaf7f5;color:#55b2a5}.probability-icon{background:#f1effb;color:#8d83c2}.metric-value{font:700 29px 'Manrope',sans-serif;letter-spacing:-1px;color:#304b5e;margin:13px 0 9px;line-height:1}.placeholder-value{color:#aebbc4}.metric-unit{font:600 11px 'DM Sans',sans-serif;letter-spacing:0;margin-left:3px;color:#a7b5be}.metric-bottom{display:flex;align-items:center;justify-content:space-between;gap:5px}.waiting-pill{display:inline-flex;align-items:center;gap:5px;padding:4px 6px;background:#f4f7f8;color:#8a9ba5;border-radius:4px;font-size:8px;white-space:nowrap}.waiting-pill i{width:5px;height:5px;border-radius:50%;background:#bcc8ce}.metric-foot{font-size:8px;color:#a2afb8;white-space:nowrap}.metric-accent{position:absolute;bottom:0;left:0;height:2px;width:100%;opacity:.7}.temp-accent{background:#f2b279}.rain-accent{background:#79bce0}.humidity-accent{background:#72cabc}.probability-accent{background:#a79cda}
+.charts-section{margin-top:31px}.section-heading{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:13px}.section-heading h2{font:700 17px 'Manrope',sans-serif;letter-spacing:-.4px;margin:6px 0 0;color:#243e52}.period-chip{font-size:9px;color:#8194a2;background:#fff;border:1px solid var(--line);border-radius:6px;padding:7px 10px}.period-chip span{margin-left:10px;color:#9aabb4}.chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.chart-panel{padding:16px 17px 13px}.panel-heading{display:flex;justify-content:space-between;align-items:flex-start}.panel-heading h3{font:700 11px 'Manrope',sans-serif;color:#385267;margin:0 0 4px}.panel-heading p{font-size:9px;color:#9aaab4;margin:0}.chart-menu{color:#a4b1ba;letter-spacing:2px;font-size:11px}.empty-chart{height:160px;display:flex;margin-top:12px}.chart-axis{display:flex;flex-direction:column;justify-content:space-between;padding:0 9px 21px 0;color:#aab6bd;font-size:8px}.chart-canvas{position:relative;flex:1;min-width:0}.chart-grid-lines{position:absolute;inset:0 0 21px;display:flex;flex-direction:column;justify-content:space-between}.chart-grid-lines i{height:1px;border-top:1px dashed #edf1f3}.chart-placeholder{position:absolute;inset:0 0 21px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#9aabb5}.chart-placeholder-icon{font-size:18px;color:#82bdb8;margin-bottom:3px}.chart-placeholder strong{font-size:9px;color:#80939f;font-weight:600}.chart-placeholder small{font-size:8px;color:#adbac1;margin-top:4px}.chart-x-axis{position:absolute;bottom:0;left:0;right:0;display:flex;justify-content:space-between;color:#aab6bd;font-size:7px;letter-spacing:.3px}.chart-legend{display:flex;justify-content:space-between;align-items:center;border-top:1px solid #f0f3f5;padding-top:9px;color:#8295a1;font-size:8px}.chart-legend span{display:flex;align-items:center;gap:6px}.chart-legend i{display:inline-block;width:7px;height:7px;border-radius:2px}.legend-temp{background:#72b3cf}.legend-rain{background:#6dc5b7}.chart-legend small{font-size:8px;color:#a5b1b8}
+.upload-section{margin-top:29px}.upload-heading{align-items:flex-start}.upload-heading h2{margin-top:6px}.section-description{font-size:10px;color:#8a9ca7;margin:5px 0 0}.file-format{font-size:8px;letter-spacing:.8px;font-weight:700;color:#7c99a7;background:#edf4f6;border-radius:4px;padding:5px 7px}.upload-panel{padding:16px 18px;display:flex;align-items:center;gap:14px}.upload-icon{width:38px;height:38px;display:grid;place-items:center;background:#eef7f8;border-radius:9px}.upload-icon svg{width:22px;fill:none;stroke:#4eaaa7;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.upload-copy{flex:1}.upload-copy strong{font-size:10px;color:#4a6475}.upload-copy p{font-size:9px;color:#9aabb5;margin:4px 0 0}.button-primary{border:0;border-radius:6px;padding:9px 12px;background:#398f9a;color:#fff;font:600 9px 'DM Sans',sans-serif;cursor:pointer;transition:background .18s,transform .18s}.button-primary:hover{background:#2c7d88;transform:translateY(-1px)}.button-primary span{padding-left:9px;font-size:14px}.upload-status{color:#a2afb7;font-size:8px;margin:8px 1px 0}.page-footer{border-top:1px solid #e9eff2;margin-top:27px;padding-top:14px;display:flex;justify-content:space-between;color:#9baab3;font-size:8px;letter-spacing:.4px}.page-footer b{color:#c1cbd1;padding:0 4px}
+@media(min-width:1450px){.content-wrap{padding-top:46px}.metric-card{min-height:140px}.empty-chart{height:177px}}
+@media(max-width:1050px){.sidebar{width:210px}.main-content{margin-left:210px}.content-wrap{padding-left:27px;padding-right:27px}.topbar{padding:0 27px}.metrics-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.metric-card{min-height:124px}}
+@media(max-width:700px){.sidebar{transform:translateX(-100%);transition:transform .22s ease;width:238px;box-shadow:10px 0 30px rgba(18,43,64,.13)}.sidebar.open{transform:translateX(0)}.main-content{margin-left:0}.topbar{height:58px;padding:0 17px;justify-content:flex-start;gap:14px}.menu-toggle{display:block}.topbar-right{margin-left:auto}.breadcrumb{font-size:10px}.content-wrap{padding:29px 17px 20px}.welcome-row{align-items:flex-start;gap:12px}.welcome-row h1{font-size:24px}.date-chip{padding:7px 8px}.date-chip strong{font-size:9px}.date-chip small{font-size:7px}.calendar-icon{width:27px;height:27px}.dataset-banner{align-items:flex-start;padding:13px;gap:10px}.banner-copy strong{font-size:10px;line-height:1.4;display:block}.banner-copy p{line-height:1.45}.banner-link{font-size:9px;align-self:center}.banner-symbol{width:29px;height:29px;flex:0 0 29px}.metrics-grid{gap:9px}.metric-card{padding:12px;min-height:119px}.metric-label{font-size:7px;letter-spacing:.7px}.metric-foot{display:none}.metric-value{font-size:26px}.chart-grid{grid-template-columns:1fr}.charts-section{margin-top:26px}.chart-panel{padding:14px}.empty-chart{height:145px}.upload-panel{flex-wrap:wrap;gap:11px}.upload-copy{min-width:calc(100% - 55px)}.button-primary{margin-left:49px}.page-footer{gap:8px;line-height:1.5}.page-footer span:last-child{text-align:right}}
+@media(max-width:420px){.welcome-row{display:block}.date-chip{display:inline-flex;margin-top:13px}.demo-tag{font-size:8px}.topbar-right{gap:10px}.banner-link{font-size:0}.banner-link span{font-size:16px}.metric-card{padding:10px}.metric-bottom{align-items:flex-start}.waiting-pill{font-size:7px}.metric-icon{width:24px;height:24px}.period-chip{font-size:8px;padding:6px 7px}.period-chip span{margin-left:5px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important}}
+
+/* Stage 2: CSV upload and validated dataset preview */
+.upload-panel input[type=file]{flex:1;min-width:170px;max-width:280px;color:#718795;font:10px 'DM Sans',sans-serif}
+.upload-panel input[type=file]::file-selector-button{border:1px solid #dce8eb;background:#f7fafb;border-radius:5px;padding:7px 9px;margin-right:8px;color:#547180;font:600 9px 'DM Sans',sans-serif;cursor:pointer}
+.upload-panel .button-primary{white-space:nowrap;margin:0}
+.upload-status{padding:9px 11px;border-radius:6px;font-size:10px;line-height:1.45}
+.upload-status.error{background:#fff0ee;color:#a9473a;border:1px solid #f6d8d3}
+.upload-status.success{background:#edf8f3;color:#397c61;border:1px solid #d7eee2}
+.dataset-preview-section{margin-top:27px}
+.record-count{padding:6px 9px;border-radius:5px;background:#eaf6f4;color:#398d83;font-size:9px;font-weight:700}
+.summary-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:13px}
+.summary-card{padding:13px 15px;display:grid;gap:7px}
+.summary-card small{font-size:8px;letter-spacing:1px;color:#91a1ad;font-weight:700}
+.summary-card strong{font:700 17px 'Manrope',sans-serif;color:#34546a}
+.table-panel{overflow:hidden}
+.table-heading{display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid #edf1f3}
+.table-heading h3{font:700 11px 'Manrope',sans-serif;color:#385267;margin:0 0 4px}
+.table-heading p{font-size:9px;color:#9aaab4;margin:0}
+.table-heading>span{font-size:9px;color:#8a9ca7;max-width:40%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.table-scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;text-align:left;white-space:nowrap}
+th,td{padding:10px 16px;border-bottom:1px solid #f0f3f5;font-size:10px}
+th{background:#f9fbfc;color:#8597a3;font-size:8px;letter-spacing:.8px;text-transform:uppercase;font-weight:700}
+td{color:#536e80}tbody tr:last-child td{border-bottom:0}
+@media(max-width:700px){.upload-panel input[type=file]{max-width:none;flex-basis:calc(100% - 50px);margin-left:49px}.upload-panel .button-primary{margin-left:49px}.summary-grid{gap:8px}.summary-card{padding:11px 10px}.summary-card strong{font-size:14px}.table-heading{align-items:flex-start;gap:8px}.table-heading>span{max-width:45%;text-align:right}}
+.analysis-section{margin-top:29px}
+.analysis-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.analysis-panel{overflow:hidden}
+.analysis-panel-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 15px;border-bottom:1px solid #edf1f3}
+.analysis-panel-heading h3{font:700 11px 'Manrope',sans-serif;color:#385267;margin:0}
+.analysis-panel-heading span,.population-chip{font-size:8px;color:#8398a5}
+.population-chip{border:1px solid #e6edef;border-radius:5px;padding:6px 8px;background:#fff}
+.stats-table td:last-child,.stats-table th:last-child{text-align:right;font-variant-numeric:tabular-nums}
+.stats-table th,.stats-table td{padding-top:8px;padding-bottom:8px}
+.humidity-heading{border-top:1px solid #edf1f3}
+.monthly-panel{margin-top:13px}
+.monthly-panel td small{font-size:8px;color:#9cabb4;margin-left:3px}
+.analysis-note{font-size:9px;line-height:1.6;color:#8799a5;margin:9px 2px 0}
+@media(max-width:700px){.analysis-grid{grid-template-columns:1fr}.population-chip{font-size:7px}.analysis-panel-heading{padding:12px}.analysis-panel-heading span{font-size:7px}}
+.probability-section{margin-top:29px}
+.probability-layout{display:grid;grid-template-columns:minmax(220px,.8fr) minmax(0,1.2fr);gap:13px}
+.probability-summary{padding:16px}
+.probability-summary-top{display:flex;align-items:center;gap:11px;padding-bottom:14px;border-bottom:1px solid #edf1f3}
+.probability-mark{height:35px;width:35px;border-radius:10px;background:#eef7f8;display:grid;place-items:center;color:#42a79f;font-size:20px}
+.probability-summary-top div{display:grid;gap:4px}.probability-summary-top small{font-size:8px;letter-spacing:.8px;color:#8fa0aa;font-weight:700}.probability-summary-top strong{font:700 19px 'Manrope',sans-serif;color:#38566a}
+.probability-counts{display:grid;gap:11px;padding:14px 0;border-bottom:1px solid #edf1f3}
+.probability-counts div{display:grid;grid-template-columns:9px 1fr auto;gap:8px;align-items:center;color:#738995;font-size:10px}.probability-counts strong{color:#38566a;font-size:11px}
+.rain-dot,.dry-dot{display:inline-block;width:7px;height:7px;border-radius:50%}.rain-dot{background:#53b8aa}.dry-dot{background:#76a9d3}
+.probability-values{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding-top:13px}.probability-values div{display:grid;gap:5px}.probability-values small{font-size:8px;color:#8b9ca7}.probability-values strong{font:700 17px 'Manrope',sans-serif;color:#348f88}
+.probability-chart-panel{padding:16px}
+.probability-chart{height:192px;display:flex;align-items:flex-end;justify-content:center;gap:46px;padding:17px 12px 0}
+.probability-bar-item{height:100%;width:92px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:6px;color:#587184}
+.probability-bar-item>strong{font-size:9px;color:#536f82;font-variant-numeric:tabular-nums}.probability-bar-item>span{display:flex;align-items:center;gap:6px;font-size:9px;padding-bottom:2px}
+.probability-bar-rail{width:34px;flex:1;max-height:130px;min-height:60px;display:flex;align-items:flex-end;background:#f2f6f7;border-radius:6px 6px 2px 2px;overflow:hidden}
+.probability-bar{width:100%;min-height:2px;border-radius:6px 6px 0 0;transition:height .25s ease}.rain-bar{background:linear-gradient(180deg,#68c7b9,#43a99d)}.dry-bar{background:linear-gradient(180deg,#91bddc,#649ac1)}
+.probability-tables{display:grid;gap:13px;margin-top:13px}
+.no-rainfall-data{padding:18px;color:#637e8d}.no-rainfall-data strong{font:700 12px 'Manrope',sans-serif}.no-rainfall-data p{font-size:10px;color:#8a9da8;margin:6px 0 0}
+@media(max-width:700px){.probability-layout{grid-template-columns:1fr}.probability-chart{gap:25px}}
+.generated-chart-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.generated-chart-card{padding:14px 14px 9px;min-width:0;overflow:hidden}
+.generated-chart-card h3{font:700 11px 'Manrope',sans-serif;color:#385267;margin:0 0 4px}
+.generated-chart-card p{font-size:9px;color:#91a1ad;margin:0}
+.generated-chart-card img{display:block;width:100%;height:auto;aspect-ratio:2.06/1;object-fit:contain;margin-top:6px}
+.charts-waiting{min-height:150px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:22px;gap:6px;color:#80939f}
+.charts-waiting .chart-placeholder-icon{margin:0}.charts-waiting strong{font-size:10px}.charts-waiting small{font-size:9px;color:#a4b1b8}
+@media(max-width:700px){.generated-chart-grid{grid-template-columns:1fr}.generated-chart-card img{aspect-ratio:1.8/1}.charts-waiting{min-height:130px}}
+.date-chip span:last-child{min-width:0;max-width:220px}
+.date-chip strong{max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dataset-kind-badge{flex:0 0 auto;padding:6px 8px;border-radius:5px;font-size:8px;font-weight:700;letter-spacing:.5px;white-space:nowrap}
+.dataset-kind-badge.historical{background:#eaf3fb;color:#477ca4}
+.dataset-kind-badge.sample{background:#fff3df;color:#a9772e}
+.dataset-kind-field{display:grid;gap:4px;color:#8296a2;font-size:8px;white-space:nowrap}
+.dataset-kind-field select{border:1px solid #dce8eb;background:#fff;border-radius:5px;padding:7px 8px;color:#526e7e;font:10px 'DM Sans',sans-serif}
+.upload-progress{flex-basis:100%;display:flex;align-items:center;gap:7px;margin-left:52px;color:#528c8c;font-size:9px}
+.upload-progress i{width:12px;height:12px;border:2px solid #c8e6e2;border-top-color:#3d9c96;border-radius:50%;animation:upload-spin .8s linear infinite}
+#upload-form[aria-busy=true]{border-color:#cce7e3}
+.upload-panel button:disabled{opacity:.7;cursor:wait}
+.reset-form{display:flex;justify-content:flex-end;margin-top:9px}
+.button-secondary{border:1px solid #d9e5e9;background:#fff;border-radius:6px;padding:8px 11px;color:#617987;font:600 9px 'DM Sans',sans-serif;cursor:pointer;transition:background .18s,border-color .18s}
+.button-secondary:hover{background:#f7fafb;border-color:#b8cbd2}
+[hidden]{display:none!important}
+@keyframes upload-spin{to{transform:rotate(360deg)}}
+@media(max-width:700px){.dataset-banner{flex-wrap:wrap}.dataset-kind-badge{margin-left:39px}.date-chip strong,.date-chip span:last-child{max-width:180px}.upload-panel .dataset-kind-field{flex-basis:calc(100% - 50px);margin-left:49px}.upload-panel .upload-progress{margin-left:49px}.reset-form{justify-content:flex-start;margin-left:49px}}
+
+/* Readability refresh: preserve the white theme and strengthen text contrast. */
+:root{--ink:#182c3d;--muted:#526879;--line:#d9e1e6;--bg:#fff;--shadow:0 5px 20px rgba(34,58,76,.055)}
+body{background:#fff;color:#182c3d;font-size:15px}
+.main-content{background:#fff}
+.topbar{background:#fff;border-color:#dce3e7}
+.content-wrap{max-width:1280px}
+.eyebrow{font-size:10px;color:#536a7a;letter-spacing:1.35px}
+.breadcrumb{font-size:12px;color:#526777}
+.breadcrumb strong{color:#243e52}
+.demo-tag{font-size:10px;color:#455f70}
+.avatar{font-size:10px}
+.subtitle{font-size:14px;color:#4f6575}
+.date-chip,.period-chip,.population-chip{background:#fff;border-color:#d7e0e5}
+.date-chip small{font-size:10px;color:#596f7e}
+.date-chip strong{font-size:12px;color:#2d485d}
+.dataset-banner{background:#e5f0ef;border-color:#cfdfdd}
+.banner-copy strong{font-size:13px;color:#254b55}
+.banner-copy p{font-size:12px;color:#4f7075}
+.banner-link{font-size:12px;color:#267d76}
+.dataset-kind-badge{font-size:9px}
+.metrics-grid{gap:15px}
+.metric-card,.panel{background:#fff;border-color:#d9e1e6;box-shadow:var(--shadow)}
+.metric-card{padding:17px 17px 15px;min-height:140px}
+.metric-label{font-size:10px;color:#536878;letter-spacing:.85px}
+.metric-value{font-size:31px;color:#203b50}
+.placeholder-value{color:#627584}
+.metric-unit{font-size:13px;color:#536a7a}
+.waiting-pill{font-size:10px;color:#465c6b;background:#e9eef1;padding:5px 7px}
+.waiting-pill i{background:#728592}
+.metric-foot{font-size:10px;color:#526878}
+.section-heading h2{font-size:20px;color:#1e384d}
+.section-description{font-size:12px;color:#506676}
+.period-chip,.population-chip{font-size:10px;color:#526777}
+.panel-heading h3,.analysis-panel-heading h3,.table-heading h3,.generated-chart-card h3{font-size:13px;color:#29475d}
+.panel-heading p,.table-heading p,.generated-chart-card p{font-size:11px;color:#536a79}
+.chart-axis,.chart-x-axis{color:#536a79}
+.chart-grid-lines i{border-color:#dce3e7}
+.chart-placeholder{color:#536a79}
+.chart-placeholder strong{font-size:11px;color:#425b6d}
+.chart-placeholder small{font-size:10px;color:#536a79}
+.chart-legend{font-size:10px;color:#4d6474;border-color:#dce3e7}
+.chart-legend small{font-size:10px;color:#536a79}
+.file-format,.record-count{font-size:10px}
+.upload-copy strong{font-size:12px;color:#2e4a5e}
+.upload-copy p{font-size:11px;color:#536a79}
+.upload-panel input[type=file]{font-size:12px;color:#40596b}
+.upload-panel input[type=file]::file-selector-button{font-size:11px;color:#40596b}
+.dataset-kind-field{font-size:10px;color:#536a79}
+.dataset-kind-field select{font-size:12px;color:#344f63;background:#fdfefe}
+.button-primary{font-size:11px;padding:10px 13px}
+.button-secondary{font-size:11px;color:#40596b;background:#f8fafb;border-color:#cbd6dc}
+.upload-status{font-size:11px}
+.summary-card small{font-size:10px;color:#526878}
+.summary-card strong{font-size:19px;color:#29475d}
+.table-heading>span{font-size:10px;color:#526878}
+th{font-size:10px;color:#435969;background:#edf1f3}
+td{font-size:12px;color:#344e60}
+.monthly-panel td small{font-size:10px;color:#526878}
+.analysis-panel-heading span{font-size:10px;color:#4e6473}
+.analysis-note{font-size:11px;color:#4e6473}
+.probability-summary-top small,.probability-values small{font-size:10px;color:#536a79}
+.probability-counts div{font-size:12px;color:#40596a}
+.probability-counts strong{font-size:12px;color:#263f52}
+.probability-summary-top strong{font-size:21px;color:#29475d}
+.probability-values strong{font-size:19px;color:#267d76}
+.probability-bar-item>strong{font-size:11px;color:#344f63}
+.probability-bar-item>span{font-size:11px;color:#40596a}
+.no-rainfall-data{color:#344f63}
+.no-rainfall-data strong{font-size:14px}
+.no-rainfall-data p{font-size:12px;color:#526878}
+.generated-chart-card{background:#fff}
+.charts-waiting{color:#435b6b}
+.charts-waiting strong{font-size:12px;color:#344e60}
+.charts-waiting small{font-size:11px;color:#526878}
+.page-footer{font-size:10px;color:#536878;border-color:#d5dee3}
+@media(max-width:700px){
+  body{font-size:14px}
+  .metric-card{padding:13px;min-height:126px}
+  .metric-label{font-size:9px}
+  .metric-value{font-size:28px}
+  .waiting-pill,.metric-foot{font-size:9px}
+  .welcome-row h1{font-size:25px}
+  .section-heading h2{font-size:19px}
+  .banner-copy strong{font-size:12px}
+  .banner-copy p{font-size:11px}
+  .table-scroll{overscroll-behavior-x:contain}
+}
+
+/* White-only surfaces with consistently dark dashboard typography. */
+.content-wrap{color:#172c40}
+.content-wrap p,.content-wrap small,.content-wrap label,.content-wrap .eyebrow,
+.breadcrumb,.demo-tag,.metric-label,.metric-foot,.waiting-pill,
+.section-description,.date-chip small,.date-chip strong,.banner-copy p,
+.banner-copy strong,.banner-link,.panel-heading p,.table-heading p,
+.table-heading>span,.analysis-panel-heading span,.analysis-note,
+.period-chip,.population-chip,.summary-card small,.summary-card strong,
+.probability-summary-top small,.probability-counts div,.probability-counts strong,
+.probability-values small,.probability-bar-item>strong,.probability-bar-item>span,
+.generated-chart-card p,.charts-waiting strong,.charts-waiting small,
+.no-rainfall-data,.no-rainfall-data p,.page-footer{color:#25394a}
+.metric-label,.summary-card small,.date-chip small{font-weight:700}
+.waiting-pill{background:#fff;border:1px solid #d6e1e6}
+.upload-panel input[type=file]::file-selector-button{background:#fff}
+th{background:#fff;color:#25394a}
+td{color:#25394a}
+.probability-bar-rail{background:#edf5f8}
+.button-secondary{background:#fff;color:#25394a}
+.dataset-kind-field,.dataset-kind-field select{color:#25394a}
+.chart-placeholder,.chart-placeholder strong,.chart-placeholder small{color:#25394a}
+.chart-axis,.chart-x-axis,.chart-legend,.chart-legend small{color:#25394a}
